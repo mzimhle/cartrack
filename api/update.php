@@ -98,7 +98,7 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 			}
 		}
     }
-	// Insert the item.
+	// Update the item.
 	$data				= array();				
 	$data['name']		= trim($_GET['name']);
 	$data['cellphone']	= trim($_GET['cellphone']);
@@ -141,17 +141,17 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 		echo json_encode($return);
 		exit;
 	}
-	// Insert the item.
+	// Update the item.
 	$data			= array();				
 	$data['name']	= trim($_GET['name']);
 	$return			= $requestObject->_object->update($data, array('id' => $animalData['id']));
-
 	if((int)$return['code'] != 200) {
 		$return['message'] = $return['message'];
 		echo json_encode($return);
 		exit;	
-	}	
+	}
 }
+
 // Lets get the data if any.
 echo json_encode($return);
 exit;

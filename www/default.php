@@ -15,6 +15,9 @@ set_include_path($_SERVER['DOCUMENT_ROOT'].'/'.PATH_SEPARATOR.$_SERVER['DOCUMENT
     <div class="slim-mainpanel">
       <div class="container">
         <div class="slim-pageheader">
+          <ol class="breadcrumb slim-breadcrumb">
+			<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+          </ol>
           <h6 class="slim-pagetitle">Dashboard</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">

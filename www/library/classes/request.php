@@ -28,10 +28,7 @@ class Request  {
 	 */
     public function insert(array $data) {
 		// Build the query
-		$url =  $this->_config['api_url_insert']. '?entity='.$this->_table;
-		foreach($data as $key => $value) {
-			$url .= "&$key=$value";
-		}
+		$url =  $this->_config['api_url_insert']. '?entity='.$this->_table.'&'.http_build_query($data);
 		// Post the data.
 		return $this->post($url);
     }
@@ -43,10 +40,7 @@ class Request  {
 	 */
     public function update(array $data, int $id) {
 		// Build the query
-		$url =  $this->_config['api_url_update']. '?entity='.$this->_table.'&id='.$id;
-		foreach($data as $key => $value) {
-			$url .= "&$key=$value";
-		}
+		$url =  $this->_config['api_url_update']. '?entity='.$this->_table.'&id='.$id.'&'.http_build_query($data);
 		// Post the data.
 		return $this->post($url);
     }
@@ -89,10 +83,7 @@ class Request  {
 	 */
     public function search(int $start, int $length, array $filter): array {
 		// Build the query
-		$url =  $this->_config['api_url_search']. '?entity='.$this->_table.'&iDisplayStart='.$start.'&iDisplayLength='.$length;
-		foreach($filter as $key => $value) {
-			$url .= "&$key=$value";
-		}
+		$url =  $this->_config['api_url_search']. '?entity='.$this->_table.'&iDisplayStart='.$start.'&iDisplayLength='.$length.'&'.http_build_query($filter);
 		// Post the data.
 		return $this->post($url);
     }
