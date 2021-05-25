@@ -40,11 +40,10 @@ abstract class Crud {
 	public function insert(array $data): array {		
         // add a timestamp
         $data['added'] = date('Y-m-d H:i:s');
-		$res = pg_insert($this->_conn, $this->_table, $data, PG_DML_ESCAPE);
+		$res = pg_insert($this->_conn, $this->_table, $data);
 		// Check if all is well.
 		if ($res) {
-			$id = pg_last_oid($res);
-			return $this->single($id);
+			return $this->output(200, 'New record added');
 		} else {
 			return $this->output(500, 'No record found');
 		}
@@ -73,7 +72,7 @@ abstract class Crud {
 	 */
     public function delete(array $where) {
 		// Return data.	
-		$res = pg_delete($this->_conn, $this->_table, $where, PG_DML_ESCAPE);
+		$res = pg_delete($this->_conn, $this->_table, $where);
 		// Check if all is well.
 		if ($res) {
 			return $this->output(200, 'Successfullly deleted');
@@ -88,13 +87,11 @@ abstract class Crud {
 	 */
     public function single(int $id): array {
 		// Get a single row of the database.
-		$rec = pg_query($this->_conn, $this->_table, array('id' => $id), PG_DML_ESCAPE);
-		if($rec) {
-			while ($row = pg_fetch_assoc($rec)) {
-			  return $this->output(200, '', $row);
-			}
+		$record = $this->fetch("select * from {$this->_table} where id = $1", true, array($id));
+		if($record) {
+			return $record;
 		} else {
-			return $this->output(500, 'No record was found for the ID: '.$id);
+			return false;
 		}
     }
 	/**

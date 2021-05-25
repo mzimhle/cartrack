@@ -47,6 +47,6 @@ $return = $requestObject->_object->paginate($start, $length, $filter);
 // Lets get the data if any.
 echo json_encode($return);
 exit;
-$return = $memberObject = $filter = $start = $length = null;
-unset($return, $memberObject, $filter, $start, $length);
+$return = $requestObject = $filter = $start = $length = null;
+unset($return, $requestObject, $filter, $start, $length);
 ?>

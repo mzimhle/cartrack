@@ -2,6 +2,31 @@
 /* Add this on all pages on top. */
 set_include_path($_SERVER['DOCUMENT_ROOT'].'/'.PATH_SEPARATOR.$_SERVER['DOCUMENT_ROOT'].'/library/classes/');
 
+if(isset($_GET['delete_id'])) {
+	// Get the class file
+	require_once 'request.php';
+	// Get the object
+	$requestObject = new Request('member');
+	
+	$errorArray				= array();
+	$errorArray['error']	= '';
+	$errorArray['result']	= 0;	
+	$formValid				= true;
+	$id						= (int)trim($_GET['delete_id']);
+	$success				= $requestObject->delete($id);	
+
+	if($success) {
+		$errorArray['error']	= '';
+		$errorArray['result']	= 1;			
+	} else {
+		$errorArray['error']	= 'Could not update, please try again.';
+		$errorArray['result']	= 0;				
+	}
+
+	echo json_encode($errorArray);
+	exit;
+}
+
 /* Setup Pagination. */
 if(isset($_GET['action']) && trim($_GET['action']) == 'search') {
 	// Get the class file

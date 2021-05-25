@@ -23,9 +23,9 @@ class Member extends Crud {
     public function getByCellphone(string $cell, int $id = null): array {
 		// Lets check if we checking for a record or about to add a new one.
 		if($id == null) {
-			return $this->fetch("select * from {$this->_table} where cellphone = '$1';", true, array($this->validateNumber($cell)));
+			return $this->fetch("select * from {$this->_table} where cellphone = $1;", true, array($this->validateNumber($cell)));
 		} else {
-			return $this->fetch("select * from {$this->_table} where cellphone = '$1' and id != $2;", true, array($this->validateNumber($cell), $id));
+			return $this->fetch("select * from {$this->_table} where cellphone = $1 and id != $2;", true, array($this->validateNumber($cell), $id));
 		}
     }
 	/**
@@ -38,18 +38,18 @@ class Member extends Crud {
     public function getByEmail(string $email, int $id = null): array {
 		// Lets check if we checking for a record or about to add a new one.
 		if($id == null) {
-			return $this->fetch("select * from {$this->_table} where email = '$1';", true, array($this->validateEmail($cell)));
+			return $this->fetch("select * from {$this->_table} where email = $1", true, array($this->validateEmail($email)));
 		} else {
-			return $this->fetch("select * from {$this->_table} where email = '$1' and id != $2;", true, array($this->validateEmail($cell), $id));
+			return $this->fetch("select * from {$this->_table} where email = $1 and id != $2;", true, array($this->validateEmail($email), $id));
 		}
-    }	
+    }
 	/**
 	 * Validate email address if any has been given.
 	 *
 	 * @param string $string
      * @return string
 	 */	
-	protected function validateEmail($string) {
+	public function validateEmail($string) {
 		if(!filter_var(pg_escape_string($string), FILTER_VALIDATE_EMAIL)) {
 			return '';
 		} else {

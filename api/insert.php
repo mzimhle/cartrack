@@ -34,24 +34,6 @@ $requestObject = new Request(trim($_GET['entity']));
 
 // Validate depending on the table enum given.
 if(trim($_GET['entity']) == Table::MEMBER) {
-	// Validate the id 
-	if(!isset($_GET['id'])) {
-		$return['message'] = 'Please add the id to be updated';
-		echo json_encode($return);
-		exit;
-	} else if(trim($_GET['id']) == '') {
-		$return['message'] = 'Please add the id to be updated';
-		echo json_encode($return);
-		exit;
-	} else {
-        /* Check if cellphone already exists. */
-        $memberData = $requestObject->_object->single(trim($_GET['id']));
-        if(!$memberData) {
-            $return['message'] = 'We could not find the member';
-			echo json_encode($return);
-			exit;			
-        }
-	}
 	// Validate the name 
 	if(!isset($_GET['name'])) {
 		$return['message'] = 'Please add the name of the member';
@@ -75,7 +57,7 @@ if(trim($_GET['entity']) == Table::MEMBER) {
         $errors[] = 'Please add a valid cellphone number, it must be 10 digits and starts with a zero';
     }  else {
         /* Check if cellphone already exists. */
-        $checkCellphone = $requestObject->_object->getByCellphone(trim($_GET['cellphone']), $memberData['id']);
+        $checkCellphone = $requestObject->_object->getByCellphone(trim($_GET['cellphone']));
         if($checkCellphone) {
             $return['message'] = 'The cellphone is already bing used, please choose another one';
 			echo json_encode($return);
@@ -90,7 +72,7 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 			exit;	
 		} else {
 			/* Check if email already exists. */
-			$checkEmail = $requestObject->_object->getByEmail(trim($_GET['email']), $memberData['id']);
+			$checkEmail = $requestObject->_object->getByEmail(trim($_GET['email']));
 			if($checkEmail) {
 				$return['message'] = 'The email is already bing used, please choose another one';
 				echo json_encode($return);
@@ -104,7 +86,7 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 	$data['cellphone']	= trim($_GET['cellphone']);
 	$data['email']		= trim($_GET['email']);
 
-	$return			= $requestObject->_object->update($data, array('id' => $memberData['id']));
+	$return			= $requestObject->_object->insert($data);
 
 	if((int)$return['code'] != 200) {
 		$return['message'] = $return['message'];
@@ -113,38 +95,20 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 	}
 	
 } else if(trim($_GET['entity']) == Table::ANIMAL) {
-	// Validate the id 
-	if(!isset($_GET['id'])) {
-		$return['message'] = 'Please add the id to be updated';
-		echo json_encode($return);
-		exit;
-	} else if(trim($_GET['id']) == '') {
-		$return['message'] = 'Please add the id to be updated';
-		echo json_encode($return);
-		exit;
-	} else {
-        /* Check if cellphone already exists. */
-        $animalData = $requestObject->_object->single(trim($_GET['id']));
-        if(!$animalData) {
-            $return['message'] = 'We could not find the member';
-			echo json_encode($return);
-			exit;			
-        }
-	}	
 	// Validate the name 
 	if(!isset($_GET['name'])) {
-		$return['message'] = 'Please add the name of the animal';
+		$return['message'] = 'Please add the name of the member';
 		echo json_encode($return);
 		exit;
 	} else if(trim($_GET['name']) == '') {
-		$return['message'] = 'Please add the name of the animal';
+		$return['message'] = 'Please add the name of the member';
 		echo json_encode($return);
 		exit;
 	}
 	// Insert the item.
 	$data			= array();				
 	$data['name']	= trim($_GET['name']);
-	$return			= $requestObject->_object->update($data, array('id' => $animalData['id']));
+	$return			= $requestObject->_object->insert($data);
 
 	if((int)$return['code'] != 200) {
 		$return['message'] = $return['message'];
@@ -155,6 +119,6 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 // Lets get the data if any.
 echo json_encode($return);
 exit;
-$return = $requestObject = $data = $animalData = null;
-unset($return, $requestObject, $data, $animalData);
+$return = $requestObject = $data = null;
+unset($return, $requestObject, $data);
 ?>

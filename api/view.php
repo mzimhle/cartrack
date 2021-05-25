@@ -28,40 +28,25 @@ if(!isset($_GET['entity'])) {
 	echo json_encode($return);
 	exit;
 }
-
+// Check the ID
+if(!isset($_GET['id'])) {
+	$return['message'] = 'Please make sure you have added the parameter before using this link.';
+	echo json_encode($return);
+	exit;
+} else if(!preg_match('/^[0-9]+/', trim($_GET['id']))) {
+	$return['message'] = 'Only integers are allowed';
+	echo json_encode($return);
+	exit;
+}
 // Get the object
 $requestObject = new Request(trim($_GET['entity']));
-
-// Validate the id 
-if(!isset($_GET['id'])) {
-	$return['message'] = 'Please add the id to be updated';
-	echo json_encode($return);
-	exit;
-} else if(trim($_GET['id']) == '') {
-	$return['message'] = 'Please add the id to be updated';
-	echo json_encode($return);
-	exit;
-} else {
-	/* Check if cellphone already exists. */
-	$memberData = $requestObject->_object->single(trim($_GET['id']));
-	if(!$memberData) {
-		$return['message'] = 'We could not find the member';
-		echo json_encode($return);
-		exit;			
-	}
-}
-// Delete item
-$return	= $requestObject->_object->delete(array('id' => $memberData['id']));
-
-if((int)$return['code'] != 200) {
-	$return['message'] = $return['message'];
-	echo json_encode($return);
-	exit;	
-}
-
+// Get the ID.
+$id 	= (int)trim($_GET['id']);
+// Get the data.
+$return = $requestObject->_object->single($id);
 // Lets get the data if any.
 echo json_encode($return);
 exit;
-$return = $requestObject = $data = $animalData = null;
-unset($return, $requestObject, $data, $animalData);
+$return = $requestObject = $id = null;
+unset($return, $requestObject, $id);
 ?>

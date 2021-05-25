@@ -3,48 +3,31 @@
 <script type="text/javascript" src="/library/javascript/bootstrap.js"></script>
 <script type="text/javascript" src="/library/javascript/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="Javascript">
+function link(url) {
+    window.location.href = url;
+}
+
 function deleteitem() {
     
     var id 		= $('#itemcode').val();
     var page 	= $('#itempage').val();
     var code 	= $('#maincode').val();
-    var reload 	= $('#itemreload').val();
-    var status  = $('#itemstatus').val();
-
-    parameter = '&status='+status;
-    if(code != '') {
-        parameter = '&id='+code;
-    }
     
     $.ajax({
         type: "GET",
         url: page+".php",
-        data: "delete_id="+id+parameter,
+        data: "delete_id="+id+(code != '' ? '&id='+code : ''),
         dataType: "json",
         success: function(data){
             if(data.result == 1) {
-                if(reload == 0) {
-                    if(typeof oTable != 'undefined') {
-                        $('#deleteModal').modal('hide');						
-                        oTable.fnDraw();
-                    } else {
-                        window.location.href = window.location.href;
-                    }
-                } else {
-                    window.location.href = window.location.href;
-                }
+				if(typeof oTable != 'undefined') {
+					$('#deleteModal').modal('hide');						
+					oTable.fnDraw();
+				} else {
+					window.location.href = window.location.href;
+				}
             } else {
-                
                 $('#deleteModal').modal('hide');
-                
-                $.howl ({
-                  type: 'danger'
-                  , title: 'Error Message'
-                  , content: data.error
-                  , sticky: $(this).data ('sticky')
-                  , lifetime: 7500
-                  , iconCls: $(this).data ('icon')
-                });
                 if(typeof oTable != 'undefined') {
                     oTable.fnDraw();
                 }							
@@ -55,12 +38,10 @@ function deleteitem() {
     return false;
 }
 
-function deleteModal(id, code, page, status = 1, reload = 0) {
+function deleteModal(id, code, page) {
     $('#itemcode').val(id);
     $('#maincode').val(code);
     $('#itempage').val(page);
-    $('#itemstatus').val(status);
-    $('#itemreload').val(reload);
     $('#deleteModal').modal('show');
     return false;
 }
