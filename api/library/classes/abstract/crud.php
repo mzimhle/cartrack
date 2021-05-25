@@ -129,7 +129,7 @@ abstract class Crud {
      * @return array
 	 */	
 	public function paginate(int $start, int $length, $filter = array()): array {
-	
+
 		$where	= 'name is not null';
 
 		if(count($filter) > 0) {
@@ -158,7 +158,7 @@ abstract class Crud {
 		// Get the rows from database with the limit for pagination.
 		$result = $this->fetch($query . " offset $1 limit $2", false, array($start, $length));
 		// Format the data to display it.
-		return $this->output(200, 'Records found', $result, $result_count['query_count'], count($result));
+		return $this->output(200, ($result_count['query_count'] == 0 ? 'No records found' : 'Records found'), $result, $result_count['query_count'], count($result));
 	}
 	/**
 	 * Functions used to sanitized a string on pagination method. Passed by reference

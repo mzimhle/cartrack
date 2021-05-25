@@ -1,6 +1,49 @@
 <?php
 /* Add this on all pages on top. */
 set_include_path($_SERVER['DOCUMENT_ROOT'].'/'.PATH_SEPARATOR.$_SERVER['DOCUMENT_ROOT'].'/library/classes/');
+
+/* Setup Pagination. */
+if(isset($_GET['action']) && trim($_GET['action']) == 'search') {
+	// Get the class file
+	require_once 'request.php';
+	// Get the object
+	$requestObject = new Request('member');
+
+	$csv	= 0;
+	$start 	= isset($_REQUEST['iDisplayStart']) ? $_REQUEST['iDisplayStart'] : 0;
+	$length	= isset($_REQUEST['iDisplayLength']) ? $_REQUEST['iDisplayLength'] : 100;
+
+	$filter = array('filter_search' => (isset($_REQUEST['filter_search']) ? trim($_REQUEST['filter_search']) : ''));
+
+	$requestData = $requestObject->search($start, $length, $filter);
+
+	$request = array();
+
+	if($requestData['code'] == 200) {
+		for($i = 0; $i < count($requestData['record']); $i++) {
+			$item = $requestData['record'][$i];
+			$request[$i] = array(
+				'<a href="/member/details.php?id='.trim($item['id']).'">'.trim($item['name']).'</a>',				
+				trim($item['cellphone']),
+				trim($item['email']),
+				"<button onclick=\"deleteModal('".$item['id']."', '', 'default'); return false;\" class='btn'>Delete</button>"
+			);
+		}
+	}
+
+	if($requestData) {
+		$response['sEcho']					= $_REQUEST['sEcho'];
+		$response['iTotalRecords']			= $requestData['display'];		
+		$response['iTotalDisplayRecords']	= $requestData['count'];
+		$response['aaData']					= $request;
+	} else {
+		$response['result']		= false;
+		$response['message']	= 'There are no items to show.';			
+	}
+	echo json_encode($response);
+	die();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,18 +96,19 @@ set_include_path($_SERVER['DOCUMENT_ROOT'].'/'.PATH_SEPARATOR.$_SERVER['DOCUMENT
     });
 
     function getRecords() {
-        var html				= '';
+        var html			= '';
         var filter_search	= $('#filter_search').val() != 'undefined' ? $('#filter_search').val() : '';
         /* Clear table contants first. */
         $('#tableContent').html('');
-        $('#tableContent').html('<table cellpadding="0" cellspacing="0" width="100%" border="0" class="display" id="dataTable"><thead><tr><th>Name</th><th>Cellphone</th><th>Physical Address</th><th></th></tr></thead><tbody id="companybody"><tr><td colspan="4" align="center"></td></tr></tbody></table>');	
+        $('#tableContent').html('<table cellpadding="0" cellspacing="0" width="100%" border="0" class="display" id="dataTable"><thead><tr><th>Name</th><th>Cellphone</th><th>Email</th><th></th></tr></thead><tbody id="contentbody"><tr><td colspan="4" align="center"></td></tr></tbody></table>');	
 
         oTable = $('#dataTable').dataTable({
             "bJQueryUI": true,
             "aoColumns" : [
-                {sWidth: "20%"},
-                {sWidth: "5%"},
-                {sWidth: "75%"}
+                {sWidth: "30%"},
+                {sWidth: "30%"},
+                {sWidth: "30%"},
+				{sWidth: "10%"}
             ],
             "sPaginationType": "full_numbers",							
             "bSort": false,
