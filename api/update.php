@@ -132,6 +132,10 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 		$return['message'] = 'Please add the name of the animal';
 		echo json_encode($return);
 		exit;
+	} else if(!preg_match('/^[A-Za-z \'-]+$/i', trim($_GET['name']))) {
+		$return['message'] = 'Please add a name with letters, hypen or an apostrophe';
+		echo json_encode($return);
+		exit;
 	}
 	// Update the item.
 	$data			= array();				

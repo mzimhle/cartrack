@@ -61,3 +61,21 @@
 127.0.0.1 - - [27/May/2021:02:16:24 +0200] "GET /insert.php?entity=member&name=Zikhona%20%20-%20%27Denga&cellphone=0812589654&email=zikhona@gmail.com HTTP/1.1" 200 87
 127.0.0.1 - - [27/May/2021:02:20:38 +0200] "-" 408 -
 127.0.0.1 - - [27/May/2021:02:30:56 +0200] "GET /insert.php?name=Zikhona%20%20-%20%27Denga&cellphone=0812589654&email=zikhona@gmail.com HTTP/1.1" 200 65
+127.0.0.1 - - [27/May/2021:02:56:26 +0200] "GET /search.php?entity=animal&iDisplayStart=0&iDisplayLength=100&filter_search= HTTP/1.1" 200 141
+127.0.0.1 - - [27/May/2021:02:56:36 +0200] "GET /insert.php?entity=animal&name=Rabbit HTTP/1.1" 200 75
+127.0.0.1 - - [27/May/2021:02:56:39 +0200] "GET /search.php?entity=animal&iDisplayStart=0&iDisplayLength=100&filter_search= HTTP/1.1" 200 213
+127.0.0.1 - - [27/May/2021:02:56:50 +0200] "GET /insert.php?entity=animal&name=Elephant+%22ds+%27d%5C HTTP/1.1" 200 79
+127.0.0.1 - - [27/May/2021:02:57:00 +0200] "GET /insert.php?entity=animal&name=Elephant+%27s HTTP/1.1" 200 75
+127.0.0.1 - - [27/May/2021:02:57:02 +0200] "GET /search.php?entity=animal&iDisplayStart=0&iDisplayLength=100&filter_search= HTTP/1.1" 200 290
+127.0.0.1 - - [27/May/2021:02:57:06 +0200] "GET /view.php?entity=animal&id=3 HTTP/1.1" 200 145
+127.0.0.1 - - [27/May/2021:02:57:12 +0200] "GET /view.php?entity=animal&id=3 HTTP/1.1" 200 145
+127.0.0.1 - - [27/May/2021:02:57:13 +0200] "GET /update.php?entity=animal&id=3&name=Elephant+%27s%23%24 HTTP/1.1" 200 86
+127.0.0.1 - - [27/May/2021:02:57:16 +0200] "GET /search.php?entity=animal&iDisplayStart=0&iDisplayLength=100&filter_search= HTTP/1.1" 200 309
+127.0.0.1 - - [27/May/2021:02:57:21 +0200] "GET /view.php?entity=animal&id=3 HTTP/1.1" 200 164
+127.0.0.1 - - [27/May/2021:02:58:23 +0200] "GET /view.php?entity=animal&id=3 HTTP/1.1" 200 164
+127.0.0.1 - - [27/May/2021:02:58:24 +0200] "GET /update.php?entity=animal&id=3&name=Elephant+%27s%23%24 HTTP/1.1" 200 79
+127.0.0.1 - - [27/May/2021:02:58:34 +0200] "GET /view.php?entity=animal&id=3 HTTP/1.1" 200 164
+127.0.0.1 - - [27/May/2021:02:58:35 +0200] "GET /update.php?entity=animal&id=3&name=Elephant+%5C%27s+%5C HTTP/1.1" 200 79
+127.0.0.1 - - [27/May/2021:02:58:43 +0200] "GET /view.php?entity=animal&id=3 HTTP/1.1" 200 164
+127.0.0.1 - - [27/May/2021:02:58:44 +0200] "GET /update.php?entity=animal&id=3&name=Elephant%27s HTTP/1.1" 200 86
+127.0.0.1 - - [27/May/2021:02:58:47 +0200] "GET /search.php?entity=animal&iDisplayStart=0&iDisplayLength=100&filter_search= HTTP/1.1" 200 306
