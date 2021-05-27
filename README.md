@@ -5,7 +5,7 @@ I had decided to put in two websites for my assessment:
 
 The first website, http://api.cartrack.loc/, is the one that holds the API endpoints, where our CRUD calls will be made. The second website, http://cartrack.loc/, is the website where we will be calling the api.
 
-I created two tables in my database on heroku, animal and member, the website on http://cartrack.loc/ allows you to list, update, delete add and search for these two tables.
+I have chose to work with the 3rd option, where I have my own repository but will use the heroku database as given on the instruction, I have made my repository accessible to the public as well as added the "sslmode=require" on my database connection string (/api/config/database.php). It works on my local website.
 
 # Folder Structure
 This is the structure of each of the two website as mentioned above:
