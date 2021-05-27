@@ -144,7 +144,7 @@ Return json data
 ```
 The return json 'code' is either 200 with 'message', "Successfully deleted" on successful insert and 'code' is 500 with 'message' "No record was deleted" on failure.
 
-# API Classes
+# API Classes ( http://api.cartrack.loc/ )
 
 /api/library/classes/abstract/crud.php
 
@@ -163,3 +163,24 @@ This file has an enum of the available tables, instead of using strings everywhe
 
 Because we will use one API to call from different tables, we need a single file that will be called for different functions from different tables, so we use this request file in order to get the object of each table depending on the entity entered via the API calls. It only has one property, the object, which will be assigned the class object of selected table class.
 
+# Website Classes ( http://cartrack.loc/ )
+
+/www/library/classes/request.php
+
+This is the only class file here, it accepts the entity (animal or member) to be executed on (CRUD), where it will take those parameters and pass them to the API. All its methods use one method which is post($url), url is depending on the action to be taken (CRUD) as to which URL will be passed.
+Settings for the links are found in the /www/config/settings.ini file.
+
+# VHOST Files
+
+I have attached two files that I used along with apache to setup my vhost files, they are:
+
+- /cartrack.api.vhost.conf
+- /cartrack.vhost.conf
+
+All rules that are suppose to be or usually are in the .htaccess file are also included here, just to centralize and properly organize them as I have the following rules for both websites mainly:
+- Setup root folder
+- Default file for each folder
+- Deny access to config/ folder
+- Deny access to libraary/classes/ folder
+- Default viewing files for apache errors such as 404, 403 and 500
+- Define error logs

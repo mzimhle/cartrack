@@ -26,7 +26,7 @@ class Request  {
 	 * @param array $data
      * @return array
 	 */
-    public function insert(array $data) {
+    public function insert(array $data): array {
 		// Build the query
 		$url =  $this->_config['api_url_insert']. '?entity='.$this->_table.'&'.http_build_query($data);
 		// Post the data.
@@ -38,7 +38,7 @@ class Request  {
 	 * @param array $data
      * @return array
 	 */
-    public function update(array $data, int $id) {
+    public function update(array $data, int $id): array {
 		// Build the query
 		$url =  $this->_config['api_url_update']. '?entity='.$this->_table.'&id='.$id.'&'.http_build_query($data);
 		// Post the data.
@@ -50,7 +50,7 @@ class Request  {
 	 * @param array $data
      * @return array
 	 */
-    public function delete(int $id) {
+    public function delete(int $id): array {
 		// Build the query
 		$url =  $this->_config['api_url_delete']. '?entity='.$this->_table.'&id='.$id;
 		// Post the data.
@@ -104,6 +104,7 @@ class Request  {
 		$result = curl_exec($ch);
 		// Closing
 		curl_close($ch);
+		// Return json string as array
 		return json_decode($result, true);
 	}
 }
