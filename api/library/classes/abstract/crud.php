@@ -45,7 +45,7 @@ abstract class Crud {
 		if ($res) {
 			return $this->output(200, 'New record added');
 		} else {
-			return $this->output(500, 'No record found');
+			return $this->output(500, 'No record added');
 		}
     }
 	/**
@@ -89,9 +89,9 @@ abstract class Crud {
 		// Get a single row of the database.
 		$record = $this->fetch("select * from {$this->_table} where id = $1", true, array($id));
 		if($record) {
-			return $record;
+			return $this->output(200, 'Record found', $record);
 		} else {
-			return false;
+			return $this->output(500, 'Record not found');
 		}
     }
 	/**

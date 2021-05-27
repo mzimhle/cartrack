@@ -8,7 +8,7 @@ $requestObject = new Request('animal');
 // Check if we are updating
 if(isset($_GET['id']) && trim($_GET['id']) != '') {
 
-	$id			= trim($_GET['id']);
+	$id			= (int)trim($_GET['id']);
 	$animalData	= $requestObject->getId($id);
 	// Check if we all good
 	if(!$animalData) {

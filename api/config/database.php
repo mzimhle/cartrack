@@ -1,8 +1,6 @@
 <?php
 // When the website is being put sent for checking, enable this.
 // Otherwise while still in development, show it.
-// I do not want to risk errors showing only notices must show
-// error_reporting(0);
 // Lets try to avoid browser caching any page.
 header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -18,15 +16,13 @@ $settings = parse_ini_file("settings.ini", true);
 if(isset($settings[$_SERVER['HTTP_HOST']])) {
 	$config = $settings[$_SERVER['HTTP_HOST']];
 } else {
-	echo 'Site configuration missing...';
+	echo json_encode(array('code' => 500, 'message' => 'Site configuration missing...'));	
 	exit;
 }
 /* Setup Database Connection. */
-// P.S. This will only be used via the API site, so all database connections will be done via an API, so every error must be returned as the standard
-// return json message, which is : {"code":200,"message":"Any message"}
 try {
 	// Connect to the database
-	$conn = pg_connect("host={$config['host']} port={$config['port']} dbname={$config['database']} user={$config['user']} password={$config['password']}");
+	$conn = pg_connect("host={$config['host']} sslmode=require port={$config['port']} dbname={$config['database']} user={$config['user']} password={$config['password']}");
 	// Check if the connectin was successful
 	if(!$conn) {
         echo json_encode(array('code' => 500, 'message' => 'Could not connect to the database, please check the connection string or credentials.'));

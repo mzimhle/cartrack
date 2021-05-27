@@ -70,14 +70,17 @@ class Member extends Crud {
 		}
 	}
 	/**
-	 * Clean up the cellphone number vefore validating it
+	 * Clean up the cellphone number before validating it, 
+	 * remove any white space and even tabs and make sure we only have numbers only.
 	 *
 	 * @param string $string
      * @return string
 	 */	
 	private function onlyNumber($string) {
-		// Remove some weird characters if any have been added. 
-		$string = preg_replace('/\D/',"", strip_tags($string));		
+		// Remove some weird characters if any have been added.
+		$string = str_replace(' ', '', $string);
+		$string = preg_replace('/\s/', '', $string);		
+		$string = preg_replace('/\D/',"", strip_tags($string));	
 		return $string;
 	}	
 }

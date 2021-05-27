@@ -43,6 +43,10 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 		$return['message'] = 'Please add the name of the member';
 		echo json_encode($return);
 		exit;
+	} else if(!preg_match('/^[A-Za-z \'-]+$/i', trim($_GET['name']))) {
+		$return['message'] = 'Please add a name with letters, hypen or an apostrophe';
+		echo json_encode($return);
+		exit;
 	}
 	// Validate the cellphone number
 	if(!isset($_GET['cellphone'])) {
@@ -59,7 +63,7 @@ if(trim($_GET['entity']) == Table::MEMBER) {
         /* Check if cellphone already exists. */
         $checkCellphone = $requestObject->_object->getByCellphone(trim($_GET['cellphone']));
         if($checkCellphone) {
-            $return['message'] = 'The cellphone is already bing used, please choose another one';
+            $return['message'] = 'The cellphone is already being used, please choose another one';
 			echo json_encode($return);
 			exit;			
         }
@@ -74,7 +78,7 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 			/* Check if email already exists. */
 			$checkEmail = $requestObject->_object->getByEmail(trim($_GET['email']));
 			if($checkEmail) {
-				$return['message'] = 'The email is already bing used, please choose another one';
+				$return['message'] = 'The email is already being used, please choose another one';
 				echo json_encode($return);
 				exit;			
 			}
@@ -83,8 +87,8 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 	// Insert the item.
 	$data				= array();				
 	$data['name']		= trim($_GET['name']);
-	$data['cellphone']	= trim($_GET['cellphone']);
-	$data['email']		= trim($_GET['email']);
+	$data['cellphone']	= $requestObject->_object->validateNumber(trim($_GET['cellphone']));
+	$data['email']		= isset($_GET['email']) ? trim($_GET['email']) : '';
 
 	$return			= $requestObject->_object->insert($data);
 
@@ -102,6 +106,10 @@ if(trim($_GET['entity']) == Table::MEMBER) {
 		exit;
 	} else if(trim($_GET['name']) == '') {
 		$return['message'] = 'Please add the name of the member';
+		echo json_encode($return);
+		exit;
+	} else if(!preg_match('/^[A-Za-z \'-]+$/i', trim($_GET['name']))) {
+		$return['message'] = 'Please add a name with letters, hypen or an apostrophe';
 		echo json_encode($return);
 		exit;
 	}

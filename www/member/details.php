@@ -8,7 +8,7 @@ $requestObject = new Request('member');
 // Check if we are updating
 if(isset($_GET['id']) && trim($_GET['id']) != '') {
 
-	$id			= trim($_GET['id']);
+	$id			= (int)trim($_GET['id']);
 	$memberData	= $requestObject->getId($id);
 	// Check if we all good
 	if(!$memberData) {
@@ -20,7 +20,6 @@ if(isset($_GET['id']) && trim($_GET['id']) != '') {
 if(count($_POST) > 0) {
 
 	$errors	= array();
-	$data	= array();
 
 	if(!isset($_POST['name'])) {
 		$errors[] = 'Please add name of the member';	

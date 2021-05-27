@@ -69,10 +69,10 @@ class Request  {
 		// Post the data.
 		$data = $this->post($url);
 
-		if($data) {
-			return $data;
+		if((int)$data['code'] == 200) {
+			return $data['record'];
 		}
-		return false;
+		return null;
     }
 	/**
 	 * Get the search the select table
